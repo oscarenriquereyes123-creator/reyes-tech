@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reyes Techs | Elite Digital</title>
+    
+    <link rel="icon" type="image/jpg" href="1000458431.jpg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #00f2ff; --secondary: #bc00ff; --bg: #050505; --green: #00ff41; }
+        * { box-sizing: border-box; cursor: crosshair; }
+        body { margin: 0; background: var(--bg); color: white; font-family: 'Rajdhani', sans-serif; overflow-x: hidden; scroll-behavior: smooth; }
+        
+        /* Loader */
+        #loader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; display: flex; align-items: center; justify-content: center; z-index: 10000; transition: 0.8s; }
+        .progress-bar { width: 250px; height: 2px; background: rgba(255,255,255,0.1); position: relative; }
+        .progress-fill { width: 0%; height: 100%; background: var(--primary); animation: fill 2.5s forwards; box-shadow: 0 0 10px var(--primary); }
+        @keyframes fill { to { width: 100%; } }
+        .loader-hidden { opacity: 0; visibility: hidden; }
+
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: -1; }
+
+        /* Navegación con Logo pequeño */
+        header { position: fixed; top: 0; width: 100%; padding: 15px 5%; background: rgba(0,0,0,0.9); z-index: 1000; border-bottom: 1px solid var(--primary); display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); }
+        .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .nav-logo-small { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--primary); box-shadow: 0 0 10px var(--primary); }
+        .nav-brand span { font-family: 'Orbitron'; color: var(--primary); font-weight: bold; letter-spacing: 2px; font-size: 1rem; }
+        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-family: 'Orbitron'; font-size: 0.7rem; transition: 0.3s; }
+        .nav-links a:hover { color: var(--primary); text-shadow: 0 0 8px var(--primary); }
+
+        section { min-height: 100vh; padding: 120px 10% 60px; display: flex; flex-direction: column; align-items: center; }
+        .content-box { background: rgba(10,10,10,0.8); border: 1px solid rgba(0,242,255,0.1); padding: 40px; width: 100%; max-width: 1000px; position: relative; }
+
+        /* Hero */
+        .logo-container { position: relative; width: 220px; margin-bottom: 20px; border: 1px solid rgba(0,242,255,0.2); padding: 10px; }
+        .main-logo { width: 100%; filter: drop-shadow(0 0 10px var(--primary)); }
+        .scan-line { position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--primary); box-shadow: 0 0 15px var(--primary); animation: scan 3s infinite linear; }
+        @keyframes scan { 0% { top: 0%; } 100% { top: 100%; } }
+        .glitch-title { font-family: 'Orbitron'; font-size: clamp(2.5rem, 8vw, 4rem); text-align: center; margin: 10px 0; }
+
+        /* Galería */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; margin-top: 40px; }
+        .project-card { position: relative; height: 200px; overflow: hidden; border: 1px solid #222; transition: 0.5s; }
+        .project-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.5; transition: 0.5s; filter: grayscale(100%); }
+        .project-card:hover img { opacity: 1; transform: scale(1.1); filter: grayscale(0%); }
+        .project-info { position: absolute; bottom: -100%; left: 0; width: 100%; background: rgba(0,242,255,0.9); color: black; padding: 10px; font-family: 'Orbitron'; font-size: 0.8rem; transition: 0.4s; font-weight: bold; }
+        .project-card:hover .project-info { bottom: 0; }
+
+        /* Radar */
+        .radar { width: 150px; height: 150px; border: 2px solid var(--green); border-radius: 50%; position: relative; margin: 30px; background: repeating-radial-gradient(circle, transparent 0, transparent 20px, rgba(0,255,65,0.05) 21px); }
+        .radar::after { content: ""; position: absolute; top: 50%; left: 50%; width: 50%; height: 50%; background: linear-gradient(45deg, transparent 40%, var(--green) 100%); transform-origin: top left; animation: rotate 4s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        /* Terminal */
+        .terminal { background: #000; border: 1px solid #333; width: 100%; max-width: 500px; padding: 25px; border-radius: 5px; }
+        input, textarea { background: transparent; border: none; color: var(--green); width: 100%; outline: none; font-family: 'Courier New', monospace; border-bottom: 1px solid #333; margin-bottom: 15px; padding: 8px; }
+        .btn-send { background: transparent; border: 1px solid var(--green); color: var(--green); width: 100%; padding: 12px; cursor: pointer; font-family: 'Orbitron'; transition: 0.3s; }
+        .btn-send:hover { background: var(--green); color: black; box-shadow: 0 0 15px var(--green); }
+    </style>
+</head>
+<body>
+
+    <div id="loader">
+        <div class="loader-content">
+            <div style="color:var(--primary); font-family:'Orbitron'; font-size: 0.8rem; margin-bottom: 10px;">ACCEDIENDO_AL_NÚCLEO...</div>
+            <div class="progress-bar"><div class="progress-fill"></div></div>
+        </div>
+    </div>
+
+    <header>
+        <a href="#inicio" class="nav-brand">
+            <img src="1000458431.jpg" alt="Logo" class="nav-logo-small">
+            <span>REYES_TECHS</span>
+        </a>
+        <nav class="nav-links">
+            <a href="#inicio">INICIO</a>
+            <a href="#nosotros">NOSOTROS</a>
+            <a href="#proyectos">PROYECTOS</a>
+            <a href="#servicios">SERVICIOS</a>
+            <a href="#contacto">CONTACTO</a>
+        </nav>
+    </header>
+
+    <div id="particles-js"></div>
+
+    <section id="inicio">
+        <div class="logo-container">
+            <div class="scan-line"></div>
+            <img src="1000458431.jpg" alt="Reyes Techs" class="main-logo">
+        </div>
+        <h1 class="glitch-title">REYES TECHS</h1>
+        <p style="letter-spacing: 12px; color: var(--primary); text-transform: uppercase;">Protocolo de Dominio Activado</p>
+    </section>
+
+    <section id="nosotros">
+        <div class="content-box">
+            <h2 style="font-family:'Orbitron'; color: var(--secondary);">EL PODER DE LA ÉLITE</h2>
+            <p style="font-size: 1.2rem; line-height: 1.6;">En <b>Reyes Techs</b> diseñamos soluciones que otros consideran imposibles. Somos el soporte crítico para infraestructuras que no pueden permitirse el fallo.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 40px; margin-top: 30px;">
+                <div style="border-left: 2px solid var(--primary); padding-left: 15px; flex: 1;">
+                    <h4 style="color: var(--primary); font-family: 'Orbitron';">MISIÓN</h4>
+                    <p>Dominar el panorama digital mediante innovación disruptiva y seguridad de grado militar.</p>
+                </div>
+                <div style="border-left: 2px solid var(--secondary); padding-left: 15px; flex: 1;">
+                    <h4 style="color: var(--secondary); font-family: 'Orbitron';">VISIÓN</h4>
+                    <p>Ser el estándar de oro en soporte técnico avanzado y desarrollo de inteligencia artificial.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="proyectos">
+        <h2 style="font-family:'Orbitron'; margin-bottom: 20px;">EXPEDIENTES_ACTIVOS</h2>
+        <div class="gallery-grid">
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80">
+                <div class="project-info">REDES_ENCRIPTADAS</div>
+            </div>
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80">
+                <div class="project-info">NÚCLEO_HARDWARE</div>
+            </div>
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80">
+                <div class="project-info">INTELIGENCIA_GLOBAL</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicios">
+        <h2 style="font-family:'Orbitron'; color: var(--primary);">OFRECEMOS_CONTROL</h2>
+        <div style="display:flex; gap:20px; flex-wrap:wrap; justify-content:center; margin-top:30px;">
+            <div class="content-box" style="width:300px; text-align:center;">
+                <h3 style="color:var(--primary)">HACKING ÉTICO</h3>
+                <p>Auditorías de penetración para asegurar sus activos digitales.</p>
+            </div>
+            <div class="content-box" style="width:300px; text-align:center;">
+                <h3 style="color:var(--primary)">SOPORTE PRO</h3>
+                <p>Asistencia técnica 24/7 para sistemas de alto rendimiento.</p>
+            </div>
+        </div>
+        <div class="radar"></div>
+    </section>
+
+    <section id="contacto">
+        <div class="terminal">
+            <div style="color:var(--green); margin-bottom: 10px; font-size: 0.8rem;">> ENLACE_SATELITAL_ESTABLECIDO</div>
+            <div>LOGIN:> <input type="text" id="user" placeholder="NOMBRE_USUARIO"></div>
+            <div>SOLICITUD:> <textarea id="msg" placeholder="ESCRIBA_COMANDO" rows="2"></textarea></div>
+            <button class="btn-send" onclick="transmit()">TRANSMITIR_PAQUETES()</button>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        const sndClick = new Audio('https://www.soundjay.com/buttons/sounds/button-16.mp3');
+        const sndHover = new Audio('https://www.soundjay.com/buttons/sounds/button-20.mp3');
+
+        function transmit() {
+            sndClick.play();
+            alert("SISTEMA: Transmisión enviada. Espere respuesta en su terminal.");
+        }
+
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 70 },
+                "color": { "value": ["#00f2ff", "#bc00ff"] },
+                "line_linked": { "enable": true, "color": "#00f2ff", "opacity": 0.1 },
+                "move": { "speed": 1.2 }
+            }
+        });
+
+        window.addEventListener('load', () => {
+            setTimeout(() => { 
+                document.getElementById('loader').classList.add('loader-hidden'); 
+            }, 3000);
+        });
+
+        document.querySelectorAll('a, .project-card, button, input, textarea, .content-box').forEach(el => {
+            el.addEventListener('mouseenter', () => { 
+                sndHover.volume = 0.1; 
+                sndHover.play(); 
+            });
+            el.addEventListener('click', () => { 
+                sndClick.play(); 
+            });
+        });
+    </script>
+</body>
+</html>
